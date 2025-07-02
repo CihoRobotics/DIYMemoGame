@@ -1,2 +1,3 @@
 # DIYMemoGame
-This is my Memory game that I made myself
+This is my Memory game that I made myself.
+For this to work you need an arduino or an esp32 OR an raspberry pi pico. Like it needs to have a brain or a microcontroller. I used 4 buttons and 4 LEDs. They are not the same colour because like it must be a bit sensible and playable. So I made the LEDs and the button caps other colours. Then I used an toggle switch for not to drain the battery quickly and I used an 9volt battery. The cable diagram is right at the left side and it is "The cale diagramm" file. The code is made by ChatGPT. Not me but I leave the code again at the left side. If you have other questions you can write an comment at github or at youtube.

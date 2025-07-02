@@ -1,0 +1,70 @@
+#define NUM_LEDS 4
+
+const int ledPins[NUM_LEDS] = {2, 3, 4, 5}; // Blue, Green, Yellow, Red LEDs
+const int buttonPins[NUM_LEDS] = {6, 7, 8, 9}; // Blue, Green, Yellow, Red buttons
+
+int sequence[100];
+int sequenceLength = 0;
+
+void setup() {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    pinMode(ledPins[i], OUTPUT);
+    pinMode(buttonPins[i], INPUT_PULLUP);
+  }
+
+  delay(2000); // When poweron Wait
+  randomSeed(analogRead(0));
+}
+
+void loop() {
+  sequence[sequenceLength] = random(0, NUM_LEDS);
+  sequenceLength++;
+
+  for (int i = 0; i < sequenceLength; i++) {
+    showLed(sequence[i]);
+    delay(500);
+  }
+
+  for (int i = 0; i < sequenceLength; i++) {
+    int input = waitForButtonPress();
+    if (input != sequence[i]) {
+      gameOverAnimation();
+      while (true); // Lock
+    }
+  }
+
+  delay(500);
+}
+
+void showLed(int index) {
+  digitalWrite(ledPins[index], HIGH);
+  delay(500);
+  digitalWrite(ledPins[index], LOW);
+}
+
+int waitForButtonPress() {
+  while (true) {
+    for (int i = 0; i < NUM_LEDS; i++) {
+      if (digitalRead(buttonPins[i]) == LOW) {
+        showLed(i);
+        while (digitalRead(buttonPins[i]) == LOW);
+        delay(100);
+        return i;
+      }
+    }
+  }
+}
+
+void gameOverAnimation() {
+  for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < NUM_LEDS; j++) {
+      digitalWrite(ledPins[j], HIGH);
+    }
+    delay(200);
+    for (int j = 0; j < NUM_LEDS; j++) {
+      digitalWrite(ledPins[j], LOW);
+    }
+    delay(200);
+  }
+}
+// It's that simple just 70 lines of codes😊
